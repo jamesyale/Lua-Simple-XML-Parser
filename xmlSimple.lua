@@ -1,4 +1,5 @@
 module(..., package.seeall)
+require 'lfs'
 
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
@@ -102,10 +103,10 @@ function newParser()
 
     function XmlParser:loadFile(xmlFilename, base)
         if not base then
-            base = system.ResourceDirectory
+            base = lfs.currentdir()
         end
-
-        local path = system.pathForFile(xmlFilename, base)
+        local seperator = package.config:sub(1,1)
+        local path = base .. seperator .. xmlFilename
         local hFile, err = io.open(path, "r");
 
         if hFile and not err then
